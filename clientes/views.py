@@ -6,7 +6,13 @@ from .forms import PersonForm
 
 @login_required
 def clientes_list(request):
-    people = Person.objects.all()
+    search_field = request.GET.get('search', None)
+    if search_field:
+        people = Person.objects.all()
+        people = people.filter(first_name=search_field)
+    else:
+        people = Person.objects.all()
+
     return render(request, 'people.html', {'people': people})
 
 

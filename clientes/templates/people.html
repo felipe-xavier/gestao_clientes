@@ -1,27 +1,54 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <a href="{% url 'logout' %}">Logout</a>
+{% block title %} Seja Bem Vindo {% endblock %}
 
-    <ul>
+{% block main %}
+{#    <div class="row">#}
+{#        <div class="col-12">#}
+            <form class="form-inline">
 
-        {% for person in people %}
-            <li>
-                <a href="{% url 'clientes_update' person.id %}"> {{ person.first_name }} </a>
-                <a href="{% url 'clientes_delete' person.id %}"> Delete </a>
-            </li>
-        {% endfor %}
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" name="search" placeholder="Type your search">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+            </form>
+{#        </div>#}
+{#    </div>#}
 
-    </ul>
+    <div class="row">
+        <div class="col">
 
-    <a href="{% url 'clientes_new' %}"> New Person </a>
-</body>
-</html>
+        </div>
+
+        <div class="col-6">
+            <ul class="list-group">
+            {% for person in people %}
+                <li class="list-group-item">
+                    <a href="{% url 'clientes_update' person.id %}" class="btn btn-link"> {{ person.first_name }} </a>
+                    <a href="{% url 'clientes_delete' person.id %}">  <i class="fa fa-trash" aria-hidden="true"></i> </a>
+                </li>
+            {% endfor %}
+            {% if not people %}
+                <div>Client not registered.</div>
+            {% endif %}
+            </ul>
+            <br>
+            <a href="{% url 'clientes_new' %}" class="btn btn-info"> New Person </a>
+        </div>
+
+        <div class="col">
+            {% if user.is_authenticated %}
+                <p>Ola {{ user.username }} <a href="{% url 'logout' %}" class="btn btn-warning">Logout</a></p>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

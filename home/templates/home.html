@@ -6,7 +6,9 @@
 
 {% if user.is_authenticated %}
     <p>Ola {{ user.username }}</p>
-    <p><a href="{% url 'logout' %}">Logout</a></p>
+
+    <a href="{%  url 'clientes_list' %}" class="btn btn-outline-info"> Ver Clientes </a>
+     <p><a href="{% url 'logout' %}" class="btn btn-warning">Logout</a></p>
 {% else %}
     <p><a href="{% url 'login' %}">Login</a></p>
 {% endif %}
