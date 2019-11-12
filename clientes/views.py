@@ -6,10 +6,15 @@ from .forms import PersonForm
 
 @login_required
 def clientes_list(request):
-    search_field = request.GET.get('search', None)
-    if search_field:
-        people = Person.objects.all()
-        people = people.filter(first_name=search_field)
+    name = request.GET.get('name', '')
+    last_name = request.GET.get('last-name', '')
+    if name or last_name:
+        people = Person.objects.filter(first_name__icontains=name) | \
+                 Person.objects.filter(last_name__icontains=last_name)
+
+    # if search_field:
+    #     people = Person.objects.all()
+    #     people = people.filter(first_name=search_field)
     else:
         people = Person.objects.all()
 
